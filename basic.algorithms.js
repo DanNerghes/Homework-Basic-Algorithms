@@ -112,7 +112,7 @@ function lookUpProfile(name, prop){
     return "No such contact"
 }
 
-// 5. Basic JavaScript: Record CollectionPassed
+// 5. Basic JavaScript: Record Collection
 
 var collection = {
     2548: {
@@ -135,26 +135,22 @@ var collection = {
   };
   
   function updateRecords(object, id, prop, value) {
-    if( prop !== 'tracks' && value !== '' ) {
-        object[id][prop] = value;
+    if(prop === 'tracks'){
+      if(!object[id][prop]) {
+          object[id][prop] = []
+          object[id][prop].push(value)
+      }
+      if(value !== '') {
+        object[id][prop].push(value)
+      }
+    } else {
+        object[id][prop] = value
     }
-    if(prop === 'tracks' && !object[id][prop]) {
-
-    }
-    return object;
+    if(value === "") {
+    delete object[id][prop];
   }
-  
-  updateRecords(collection, 5439, 'artist', 'ABBA');
-  updateRecords(collection, 2548, 'artist', 'Bon Jovi');
-
-
-// If prop isn't tracks and value isn't an empty string, update or set that album's prop to value.
-// If prop is tracks but the album doesn't have a tracks property, create an empty array and add value to it.
-// If prop is tracks and value isn't an empty string, add value to the end of the album's existing tracks array.
-// If value is an empty string, delete the given prop property from the album.
-  
-
-// 6. Basic Algorithm Scripting: Convert Celsius to Fahrenheit
+  return object;
+}
 
 function convertToF(celsius) {
     let fahrenheit = celsius * 9 / 5 + 32;
